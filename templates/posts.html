@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Список задач</title>
+
 </head>
 <body>
+<h1 align="center" style="color:white">Список задач</h1>
+<style>
+    body {
+        background-image: url("https://oir.mobi/uploads/posts/2021-03/1616963578_18-p-serii-fon-20.jpg");
+    }
+</style>
+{% for el in task  %}
+    <div class="alert alert-info">
+        <h2 style="color:white">Название задачи : {{ el.title }}</h2>
+        <p style="color:white">Описание : {{ el.description }}</p>
+        <p style="color:white">Пользователь : {{ el.user_id }}</p>
+        <p style="color:white"><b style="color:white">Дата : {{ el.date_posted.date() }}</b></p>
+        <a style="color:firebrick" href="/posts/{{ el.id }}" class="btn btn-warning">Детальнее</a>
+    </div>
+{% endfor %}
 
 </body>
 </html>
