@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = SECRET
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbbb.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 db = SQLAlchemy(app)
 
 
@@ -42,26 +42,21 @@ def create_database():
     db.create_all()
 
 
-@app.route('/list', methods=['GET', 'POST'])
-def to_do_list():
-    title = request.form.get('title')
-    description = request.form.get('description')
-    login = request.form.get('login')
-    if request.method == 'POST':
-        new_post = Post(title=title, description=description,user_id=login)
-        db.session.add(new_post)
-        db.session.commit()
-        return redirect(url_for('home_page'))
-    return render_template('to_do_list.html')
-
-
 @app.route('/')
 def home_page():
+    '''
+    Домашняя страница сайта
+    С кнопками:
+            1)Регистрация
+            2)Авторизация
+            3)Просмотр статей
+    '''
     return render_template('index.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def registration_page():
+    '''Регистрация пользователя на сайте'''
     login = request.form.get('login')
     password = request.form.get('password')
     password2 = request.form.get('password2')
@@ -90,19 +85,55 @@ def registration_page():
 
 @app.route('/login', methods=['GET', 'POST'])
 def authoriz():
+    '''Авторизация пользователя'''
     login = request.form.get('login')
     password = request.form.get('password')
     if request.method == 'POST':
         if User.query.filter_by(login=login).first() is None \
                 and User.query.filter_by(password=password).first() is None:
             flash('Пользователь не существует', 'error')
-        elif User.query.filter_by(login=login).first() is None:
-            flash('Введите логин', 'error')
-        elif User.query.filter_by(password=password).first() is None:
-            flash('Не верный пароль', 'error')
-        else:
-            redirect(url_for('to_do_list'))
+        return redirect(url_for('home_page'))
     return render_template('login.html')
+
+
+@app.route('/list', methods=['GET', 'POST'])
+def to_do_list():
+    '''Просмотр задач'''
+    title = request.form.get('title')
+    description = request.form.get('description')
+    login = request.form.get('login')
+    if request.method == 'POST':
+        new_post = Post(title=title, description=description, user_id=login)
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for('home_page'))
+    return render_template('to_do_list.html')
+
+
+@app.route('/posts', methods=['GET', 'POST'])
+def task_view():
+    '''Вывод задач'''
+    task = Post.query.order_by(Post.date_posted.desc()).all()
+    return render_template('posts.html', task=task)
+
+
+@app.route('/posts/<int:id>', methods=['GET', 'POST'])
+def task_detail(id):
+    '''Детальный вывод задач и удаление'''
+    tasks = Post.query.get(id)
+    return render_template('post_detail.html', tasks=tasks)
+
+
+@app.route('/posts/<int:id>/del', methods=['GET', 'POST'])
+def task_delete(id):
+    '''Детальный вывод задач и удаление'''
+    task = Post.query.get_or_404(id)
+    try:
+        db.session.delete(task)
+        db.session.commit()
+        return redirect('/posts')
+    except:
+        return 'При удалении задачи произошла ошибка'
 
 
 if __name__ == '__main__':
