@@ -4,12 +4,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from config import SECRET
 from werkzeug.security import generate_password_hash, check_password_hash
-
-app = Flask(__name__)
-app.secret_key = SECRET
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbb.db'
-db = SQLAlchemy(app)
-
+from app import db
 
 class User(db.Model):
     '''Эта таблица будет содержать четыре столбца:
