@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список задач</title>
+
+</head>
+<body>
+<h1 align="center" style="color:white">Подробное описание</h1>
+<style>
+    body {
+        background-image: url("https://oir.mobi/uploads/posts/2021-03/1616963578_18-p-serii-fon-20.jpg");
+    }
+</style>
+
+    <div class="alert alert-info">
+        <h2 style="color:white">Название задачи : {{ tasks.title }}</h2>
+        <p style="color:white">Описание : {{ tasks.description }}</p>
+        <p ><b style="color:white">Дата : {{ tasks.date_posted.date() }}</b></p>
+        <a style="color:firebrick" href="/posts/{{ tasks.id }}/del" class="btn btn-danger">Удалить</a>
+    </div>
+
+
+</body>
+</html>
