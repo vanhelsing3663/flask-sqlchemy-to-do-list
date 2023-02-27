@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<h1 align="center" style="color:white">Страница регистрации</h1>
+<style>
+    body {
+        background-image: url("https://oir.mobi/uploads/posts/2021-03/1616963578_18-p-serii-fon-20.jpg");
+    }
+</style>
+{% for msg in get_flashed_messages() %}
+    <div style="color:white" class="flash">{{ msg }}</div>
+{% endfor %}
+<form method="post">
+    <p>
+    <h2 style="color:white">
+        <ins>Введите email</ins>
+    </h2>
+    <input maxlength="20" size="40" name="login" value="Введите email"/></p>
+    <p>
+    <h2 style="color:white">
+        <ins>Введите пароль</ins>
+    </h2>
+    <input type="password" maxlength="20" size="40" name="password" /></p>
+    <div id="password-constraints" style="color:white">
+        <ins/>
+        Не менее восьми знаков, включая буквы, цифры и специальные символы.</ins></div>
+    <p>
+    <h2 style="color:white">
+        <ins>Повторите пароль</ins>
+    </h2>
+    <input type="password" maxlength="20" size="40" name="password2"/>
+    </p>
+    <div id="password-constraints" style="color:white">
+        <ins>Не менее восьми знаков, включая буквы, цифры и специальные символы.</ins>
+    </div>
+
+
+    <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ"/>
+
+</form>
+</body>
+</html>

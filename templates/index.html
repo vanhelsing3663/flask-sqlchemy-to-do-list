@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+</head>
+<body>
+<h1 align="center" style="color:white">Домашняя страница списка дел</h1>
+<style>
+    body {
+        background-image: url("https://oir.mobi/uploads/posts/2021-03/1616963578_18-p-serii-fon-20.jpg");
+    }
+</style>
+<h3 align="center" style="color:white"><ins>Добро пожаловать, создайте свой личный кабинет для просмотра контента на сайте</ins></h3>
+<a align="center" href="{{ url_for("registration_page") }}"><h2 align="center" style="color:deepskyblue"><ins>Страница регистрации</ins></h2></a>
+<h3 align="center"><ins>Войти в личный кабинет</ins></h3>
+<a align="center" href="{{ url_for("authoriz") }}" ><h2 align="center" style="color:deepskyblue">Авторизоваться</h2></a>
+<h3 align="center"><ins>Перейти к списку дел</ins></h3>
+<a align="center" href="{{ url_for("to_do_list") }}"><h2 align="center" style="color:deepskyblue"><ins>Список дел</ins></h2></a>
+</body>
+</html>
